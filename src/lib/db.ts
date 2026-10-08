@@ -18,9 +18,7 @@ export async function connectDB(): Promise<typeof mongoose> {
   const uri = process.env.MONGODB_URI;
 
   if (!uri || uri === "your_mongodb_atlas_uri_here") {
-    const error = new Error(
-      "MONGODB_URI is missing or still the placeholder value. Set it in your .env file."
-    );
+    const error = new Error("MONGODB_URI not configured");
     (error as Error & { code?: string }).code = "NO_DB";
     throw error;
   }
