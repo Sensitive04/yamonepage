@@ -1,0 +1,13 @@
+
+> yamone-cosmetics@1.0.0 start
+> next start
+
+▲ Next.js 16.4.0
+- Local:         http://localhost:3000
+- Network:       http://192.168.56.1:3000
+✓ Ready in 285ms
+✓ Running next.config.ts took 63ms
+(node:24728) [MONGOOSE] Warning: mongoose: the `new` option for `findOneAndUpdate()` and `findOneAndReplace()` is deprecated. Use `returnDocument: 'after'` instead.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24728) [MONGOOSE] Warning: mongoose: the `new` option for `findOneAndUpdate()` and `findOneAndReplace()` is deprecated. Use `returnDocument: 'after'` instead.
+^C^C

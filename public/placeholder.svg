@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Product image placeholder">
+  <rect width="800" height="800" fill="#fbf1ef"/>
+  <g fill="none" stroke="#b76e79" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity="0.65">
+    <path d="M330 540V330l-40-60h180l-40 60v210"/>
+    <path d="M330 400h140"/>
+    <circle cx="400" cy="235" r="18"/>
+    <path d="M300 540h200"/>
+    <path d="M320 580h160"/>
+  </g>
+  <g fill="#b76e79" opacity="0.18">
+    <path d="M400 180c60 40 90 90 90 150H310c0-60 30-110 90-150z"/>
+  </g>
+  <text x="400" y="680" text-anchor="middle" font-family="Georgia, serif" font-size="46" fill="#b76e79" opacity="0.75">Yamone</text>
+</svg>
