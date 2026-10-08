@@ -30,9 +30,11 @@ export async function GET(request: NextRequest) {
     const products = await Product.find(filter).sort({ createdAt: -1 }).lean();
     return NextResponse.json({ products });
   } catch (error) {
-    const status = isDatabaseError(error) ? 503 : 500;
+    const message = error instanceof Error ? error.message : "Failed to load products.";
+    const isDb = isDatabaseError(error);
+    const status = isDb ? 503 : 500;
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Failed to load products." },
+      { error: isDb && message.includes("MONGODB_URI") ? "Database not configured." : message },
       { status }
     );
   }

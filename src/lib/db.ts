@@ -28,7 +28,14 @@ export async function connectDB(): Promise<typeof mongoose> {
   if (cache.conn) return cache.conn;
 
   if (!cache.promise) {
-    cache.promise = mongoose.connect(uri, { bufferCommands: false });
+    cache.promise = mongoose.connect(uri, {
+      bufferCommands: false,
+      maxPoolSize: 10,
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 5000,
+      socketTimeoutMS: 5000,
+      heartbeatFrequencyMS: 10000,
+    });
   }
 
   try {
@@ -42,5 +49,16 @@ export async function connectDB(): Promise<typeof mongoose> {
 }
 
 export function isDatabaseError(error: unknown): boolean {
-  return Boolean(error && typeof error === "object" && "code" in error);
+  if (!error || typeof error !== "object") return false;
+  if ("code" in error) {
+    const code = (error as { code?: unknown }).code;
+    if (code === "NO_DB" || code === "ETIMEDOUT" || code === "ECONNREFUSED" || code === "ENOTFOUND") {
+      return true;
+    }
+  }
+  const name = (error as { name?: unknown }).name;
+  if (name === "MongoServerSelectionError" || name === "MongoNetworkError") {
+    return true;
+  }
+  return false;
 }
