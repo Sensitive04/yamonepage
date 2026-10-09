@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
-import { fetchTelegramUsername } from "@/lib/api-client";
+import { fetchTelegramBotUsername } from "@/lib/api-client";
 
 const SOCIALS = [
   {
@@ -26,7 +26,7 @@ const SOCIALS = [
   },
   {
     label: "Telegram",
-    href: "", // resolved from /api/config below, fallback used until loaded
+    href: "", // resolved from /api/config below
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-4 w-4">
         <path d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z" />
@@ -36,25 +36,23 @@ const SOCIALS = [
 ];
 
 export function Footer() {
-  const [telegramHandle, setTelegramHandle] = useState("");
+  const [botUsername, setBotUsername] = useState("");
 
   useEffect(() => {
     let alive = true;
-    fetchTelegramUsername()
+    fetchTelegramBotUsername()
       .then((username) => {
-        if (alive && username) setTelegramHandle(username);
+        if (alive) setBotUsername(username);
       })
       .catch(() => {
-        /* config unavailable — fallback link stays */
+        /* config unavailable — Telegram button stays hidden */
       });
     return () => {
       alive = false;
     };
   }, []);
 
-  const telegramHref = telegramHandle
-    ? `https://t.me/${telegramHandle}`
-    : "https://t.me/yamonecosmetics";
+  const telegramHref = botUsername ? `https://t.me/${botUsername}` : "";
 
   return (
     <footer id="contact" className="relative scroll-mt-24 overflow-hidden bg-stone-950 text-stone-400">
@@ -85,19 +83,23 @@ export function Footer() {
             </p>
 
             <div className="mt-7 flex flex-wrap gap-2.5">
-              {SOCIALS.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.label === "Telegram" ? telegramHref : social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.label}
-                  className="flex h-11 items-center gap-2 rounded-full border border-white/10 px-4 text-sm font-medium text-stone-300 transition-colors hover:border-brand-400/50 hover:text-brand-300"
-                >
-                  {social.icon}
-                  <span className="hidden sm:inline">{social.label}</span>
-                </a>
-              ))}
+              {SOCIALS.map((social) => {
+                const href = social.label === "Telegram" ? telegramHref : social.href;
+                if (!href) return null;
+                return (
+                  <a
+                    key={social.label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    className="flex h-11 items-center gap-2 rounded-full border border-white/10 px-4 text-sm font-medium text-stone-300 transition-colors hover:border-brand-400/50 hover:text-brand-300"
+                  >
+                    {social.icon}
+                    <span className="hidden sm:inline">{social.label}</span>
+                  </a>
+                );
+              })}
             </div>
           </div>
 

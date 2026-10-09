@@ -1,4 +1,4 @@
-import type { Product, ProductPayload } from "./types";
+import type { CartItem, Product, ProductPayload } from "./types";
 import { CATEGORIES } from "./constants";
 
 export class ApiError extends Error {
@@ -127,11 +127,33 @@ export function deleteCategory(id: string) {
   return request<{ ok: boolean }>(`/api/categories/${id}`, { method: "DELETE" });
 }
 
-export async function fetchTelegramUsername(): Promise<string> {
+export async function fetchTelegramBotUsername(): Promise<string> {
   try {
-    const data = await request<{ telegramUsername: string }>("/api/config");
-    return data.telegramUsername.replace(/^@/, "");
+    const data = await request<{ telegramBotUsername: string }>("/api/config");
+    return data.telegramBotUsername.replace(/^@/, "");
   } catch {
     return "";
   }
+}
+
+export interface TelegramOrderResult {
+  ok: boolean;
+  botLink: string;
+}
+
+export interface CreateOrderPayload {
+  items: CartItem[];
+  customer: { name: string; phone: string; address: string };
+}
+
+export interface CreateOrderResult {
+  orderNumber: string;
+  botLink: string;
+}
+
+export function createOrder(payload: CreateOrderPayload): Promise<CreateOrderResult> {
+  return request<CreateOrderResult>("/api/orders", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
 }

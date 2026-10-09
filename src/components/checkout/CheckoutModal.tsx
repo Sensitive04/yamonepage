@@ -3,12 +3,8 @@
 import { useEffect, useState } from "react";
 import { Loader2, Send, X } from "lucide-react";
 import { deliveryFee, formatPrice } from "@/lib/constants";
-import { fetchTelegramUsername } from "@/lib/api-client";
-import {
-  buildOrderMessage,
-  createOrderNumber,
-  generateInvoicePdf,
-} from "@/lib/receipt";
+import { createOrder } from "@/lib/api-client";
+import { generateInvoicePdf } from "@/lib/receipt";
 import { cartSubtotal, useCart } from "@/store/cart";
 import { useToast } from "@/components/ui/Toast";
 
@@ -74,7 +70,6 @@ export function CheckoutModal({ open, onClose }: CheckoutModalProps) {
     if (!validate()) return;
 
     setSubmitting(true);
-    const orderNumber = createOrderNumber();
     const customer = {
       name: form.name.trim(),
       phone: form.phone.trim(),
@@ -82,24 +77,20 @@ export function CheckoutModal({ open, onClose }: CheckoutModalProps) {
     };
 
     try {
-      // 1. Generate + download the branded PDF invoice in the browser.
+      // 1. Persist the order and notify the shop; receive the order number + bot link.
+      const { orderNumber, botLink } = await createOrder({ items, customer });
+
+      // 2. Generate + download the branded PDF invoice in the browser.
       generateInvoicePdf(items, customer, orderNumber);
 
-      // 2. Build the structured order summary and hand off to Telegram.
-      const message = buildOrderMessage(items, customer, orderNumber);
-      const username = await fetchTelegramUsername();
-
-      if (username) {
-        const url = `https://t.me/${username}?text=${encodeURIComponent(message)}`;
-        window.open(url, "_blank", "noopener,noreferrer");
-      } else {
-        console.info("TELEGRAM_USERNAME not configured. Order summary:\n" + message);
-        toast("Invoice downloaded. Telegram username is not configured yet.", "info");
+      // 3. Hand the customer over to the Telegram bot to confirm and chat.
+      if (botLink) {
+        window.open(botLink, "_blank", "noopener,noreferrer");
       }
 
       clear();
       setForm({ name: "", phone: "", address: "" });
-      toast(username ? "Invoice downloaded — Telegram opened!" : "Invoice downloaded!", "success");
+      toast("Order placed! Continue in Telegram to confirm.", "success");
       onClose();
     } catch (error) {
       console.error(error);
@@ -231,8 +222,8 @@ export function CheckoutModal({ open, onClose }: CheckoutModalProps) {
           </button>
 
           <p className="text-center text-xs leading-relaxed text-stone-500">
-            Your branded PDF invoice downloads instantly, then we open Telegram with your order
-            summary pre-filled.
+            Your branded PDF invoice downloads instantly, then we open our Telegram bot to
+            confirm your order.
           </p>
         </form>
       </div>

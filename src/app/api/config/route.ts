@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  return NextResponse.json({
-    telegramUsername: process.env.TELEGRAM_USERNAME ?? "",
-  });
+  const telegramBotUsername = (process.env.TELEGRAM_BOT_USERNAME ?? "").replace(
+    /^@/,
+    ""
+  );
+
+  return NextResponse.json({ telegramBotUsername });
 }

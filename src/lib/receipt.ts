@@ -8,38 +8,6 @@ export interface ReceiptCustomer {
   address: string;
 }
 
-export function buildOrderMessage(
-  items: CartItem[],
-  customer: ReceiptCustomer,
-  orderNumber: string
-): string {
-  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shipping = deliveryFee(subtotal);
-  const total = subtotal + shipping;
-
-  const lines = items.map(
-    (item, index) =>
-      `${index + 1}. ${item.name} × ${item.quantity} — ${formatPrice(item.price * item.quantity)}`
-  );
-
-  return [
-    `🛍️ NEW ORDER — Yamone Cosmetics`,
-    `Order: #${orderNumber}`,
-    ``,
-    ...lines,
-    ``,
-    `Subtotal: ${formatPrice(subtotal)}`,
-    `Delivery: ${shipping === 0 ? "Free" : formatPrice(shipping)}`,
-    `TOTAL: ${formatPrice(total)}`,
-    ``,
-    `👤 Name: ${customer.name}`,
-    `📞 Phone: ${customer.phone}`,
-    `📍 Address: ${customer.address}`,
-    ``,
-    `Please confirm availability and delivery details. Thank you! 💕`,
-  ].join("\n");
-}
-
 export function generateInvoicePdf(
   items: CartItem[],
   customer: ReceiptCustomer,
@@ -207,13 +175,4 @@ export function generateInvoicePdf(
   );
 
   doc.save(`yamone-invoice-${orderNumber}.pdf`);
-}
-
-export function createOrderNumber(): string {
-  const now = new Date();
-  const stamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(
-    now.getDate()
-  ).padStart(2, "0")}`;
-  const suffix = Math.floor(1000 + Math.random() * 9000);
-  return `YC-${stamp}-${suffix}`;
 }
