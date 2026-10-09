@@ -75,14 +75,30 @@ export async function sendTelegramMessage(
     : { ok: false, error: result.error };
 }
 
-export function orderKeyboard(orderNumber: string) {
+export type OrderKeyboardStatus = "new" | "confirmed" | "delivered" | "cancelled";
+
+export function orderKeyboard(orderNumber: string, status: OrderKeyboardStatus = "new") {
+  if (status === "new") {
+    return {
+      inline_keyboard: [
+        [{ text: "✅ Confirm order", callback_data: `confirm:${orderNumber}` }],
+        [{ text: "❌ Cancel order", callback_data: `cancel:${orderNumber}` }],
+      ],
+    };
+  }
+
+  if (status === "confirmed") {
+    return {
+      inline_keyboard: [
+        [{ text: "🚚 Mark delivered", callback_data: `deliver:${orderNumber}` }],
+        [{ text: "❌ Cancel order", callback_data: `cancel:${orderNumber}` }],
+      ],
+    };
+  }
+
   return {
     inline_keyboard: [
-      [
-        { text: "✅ Confirm order", callback_data: `confirm:${orderNumber}` },
-        { text: "🚚 Mark delivered", callback_data: `deliver:${orderNumber}` },
-      ],
-      [{ text: "❌ Cancel order", callback_data: `cancel:${orderNumber}` }],
+      [{ text: status === "delivered" ? "🚚 Delivered" : "❌ Cancelled", callback_data: "noop" }],
     ],
   };
 }

@@ -3,7 +3,7 @@ import { connectDB } from "@/lib/db";
 import { Order } from "@/models/Order";
 import { TelegramRelay } from "@/models/TelegramRelay";
 import { customerOrderMessage, type OrderStatus } from "@/lib/order";
-import { ownerChatId, sendTelegramMessage, telegramApi } from "@/lib/telegram";
+import { orderKeyboard, ownerChatId, sendTelegramMessage, telegramApi } from "@/lib/telegram";
 
 export const dynamic = "force-dynamic";
 
@@ -44,10 +44,10 @@ interface TgUpdate {
   callback_query?: TgCallbackQuery;
 }
 
-const ACTIONS: Record<string, OrderStatus> = {
-  confirm: "confirmed",
-  deliver: "delivered",
-  cancel: "cancelled",
+const TRANSITIONS: Record<string, { from: OrderStatus[]; to: OrderStatus }> = {
+  confirm: { from: ["new"], to: "confirmed" },
+  deliver: { from: ["confirmed"], to: "delivered" },
+  cancel: { from: ["new", "confirmed"], to: "cancelled" },
 };
 
 function authorized(request: NextRequest): boolean {
@@ -100,9 +100,15 @@ export async function POST(request: NextRequest) {
     }
 
     const [action, orderNumber] = (callback.data ?? "").split(":");
-    const status = ACTIONS[action];
 
-    if (!status || !orderNumber || !dbReady) {
+    if (action === "noop") {
+      await telegramApi("answerCallbackQuery", { callback_query_id: callback.id });
+      return NextResponse.json({ ok: true });
+    }
+
+    const transition = TRANSITIONS[action];
+
+    if (!transition || !orderNumber || !dbReady) {
       await telegramApi("answerCallbackQuery", {
         callback_query_id: callback.id,
         text: "Could not update the order.",
@@ -110,9 +116,38 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ ok: true });
     }
 
+    const current = await Order.findOne({ orderNumber }).lean();
+
+    if (!current) {
+      await telegramApi("answerCallbackQuery", {
+        callback_query_id: callback.id,
+        text: "Order not found.",
+      });
+      return NextResponse.json({ ok: true });
+    }
+
+    // Enforce the order lifecycle: new -> confirmed -> delivered.
+    if (!transition.from.includes(current.status as OrderStatus)) {
+      await telegramApi("answerCallbackQuery", {
+        callback_query_id: callback.id,
+        text:
+          current.status === "new"
+            ? "Confirm the order first."
+            : `This order is already ${current.status}.`,
+      });
+      if (callback.message) {
+        await telegramApi("editMessageReplyMarkup", {
+          chat_id: callback.message.chat.id,
+          message_id: callback.message.message_id,
+          reply_markup: orderKeyboard(orderNumber, current.status as OrderStatus),
+        });
+      }
+      return NextResponse.json({ ok: true });
+    }
+
     const order = await Order.findOneAndUpdate(
       { orderNumber },
-      { $set: { status } },
+      { $set: { status: transition.to } },
       { new: true }
     ).lean();
 
@@ -126,7 +161,7 @@ export async function POST(request: NextRequest) {
 
     await telegramApi("answerCallbackQuery", {
       callback_query_id: callback.id,
-      text: `Order ${orderNumber} → ${status}.`,
+      text: `Order ${orderNumber} → ${transition.to}.`,
     });
 
     // Tell the customer, if they've already opened the bot.
@@ -137,12 +172,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Reflect the new status on the owner's message and drop the buttons.
+    // Update the owner's message to show only the next valid action(s).
     if (callback.message) {
       await telegramApi("editMessageReplyMarkup", {
         chat_id: callback.message.chat.id,
         message_id: callback.message.message_id,
-        reply_markup: { inline_keyboard: [[{ text: `Status: ${status}`, callback_data: "noop" }]] },
+        reply_markup: orderKeyboard(orderNumber, transition.to),
       });
     }
 
