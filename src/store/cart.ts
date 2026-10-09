@@ -73,6 +73,9 @@ export const useCart = create<CartState>()(
     }),
     {
       name: "yamone-cart",
+      // Defer storage hydration to the client mount (see CartDrawer) so the
+      // server HTML and first client render are identical.
+      skipHydration: true,
       partialize: (state) => ({ items: state.items }) as CartState,
       merge: (persisted, current) => ({
         ...current,

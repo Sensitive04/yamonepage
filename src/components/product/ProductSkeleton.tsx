@@ -1,7 +1,7 @@
 export function ProductSkeleton() {
   return (
     <div
-      className="overflow-hidden rounded-2xl border border-slate-100 bg-white p-2 shadow-sm sm:p-3"
+      className="overflow-hidden rounded-2xl border border-stone-100 bg-white p-2 shadow-sm sm:p-3"
       aria-hidden="true"
     >
       <div className="skeleton aspect-square rounded-xl sm:aspect-[4/5]" />

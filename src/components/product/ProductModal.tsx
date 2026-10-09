@@ -26,20 +26,20 @@ export function ProductModal({ product, onClose }: { product: Product | null; on
 
   return (
     <div
-      className="fixed inset-0 z-[70] flex items-end justify-center bg-slate-900/50 backdrop-blur-[2px] sm:items-center sm:p-6 animate-fade-in"
+      className="fixed inset-0 z-[70] flex items-end justify-center bg-stone-900/50 backdrop-blur-[2px] sm:items-center sm:p-6 animate-fade-in"
       role="dialog"
       aria-modal="true"
       aria-label={product.name}
       onClick={onClose}
     >
       <div
-        className="relative max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-t-3xl border border-slate-200 bg-white shadow-2xl animate-scale-in sm:rounded-3xl"
+        className="relative max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-t-3xl border border-stone-200 bg-white shadow-2xl animate-scale-in sm:rounded-3xl"
         onClick={(event) => event.stopPropagation()}
       >
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-700 shadow-sm backdrop-blur transition-colors hover:bg-white"
+          className="absolute right-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-stone-200 bg-white/90 text-stone-700 shadow-sm backdrop-blur transition-colors hover:bg-white"
           aria-label="Close product details"
         >
           <X className="h-5 w-5" />
@@ -62,7 +62,7 @@ function ProductDetail({ product, onClose }: { product: Product; onClose: () => 
 
   return (
     <div className="grid md:grid-cols-2">
-      <div className="relative aspect-square bg-slate-100 md:aspect-auto md:min-h-[520px]">
+      <div className="relative aspect-square bg-stone-100 md:aspect-auto md:min-h-[520px]">
         <SmartImage
           src={product.image}
           alt={product.name}
@@ -70,28 +70,28 @@ function ProductDetail({ product, onClose }: { product: Product; onClose: () => 
           sizes="(max-width: 768px) 100vw, 50vw"
         />
         {!product.inStock && (
-          <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm backdrop-blur">
+          <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-stone-700 shadow-sm backdrop-blur">
             Sold out
           </span>
         )}
       </div>
 
-      <div className="flex flex-col border-t border-slate-100 p-6 sm:p-8 md:border-l md:border-t-0">
+      <div className="flex flex-col border-t border-stone-100 p-6 sm:p-8 md:border-l md:border-t-0">
         <div className="flex items-center gap-3">
           <p className="text-xs font-semibold uppercase tracking-wider text-brand-600">
             {product.category}
           </p>
-          <span className="h-px flex-1 bg-slate-100" aria-hidden="true" />
+          <span className="h-px flex-1 bg-stone-100" aria-hidden="true" />
           <span
             className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${
               product.inStock
                 ? "bg-emerald-50 text-emerald-700"
-                : "bg-slate-100 text-slate-500"
+                : "bg-stone-100 text-stone-500"
             }`}
           >
             <span
               className={`h-1.5 w-1.5 rounded-full ${
-                product.inStock ? "bg-emerald-500" : "bg-slate-400"
+                product.inStock ? "bg-emerald-500" : "bg-stone-400"
               }`}
               aria-hidden="true"
             />
@@ -99,37 +99,37 @@ function ProductDetail({ product, onClose }: { product: Product; onClose: () => 
           </span>
         </div>
 
-        <h2 className="mt-4 text-2xl font-semibold leading-tight tracking-tight text-slate-900 sm:text-3xl">
+        <h2 className="mt-4 text-2xl font-semibold leading-tight tracking-tight text-stone-900 sm:text-3xl">
           {product.name}
         </h2>
 
-        <p className="mt-3 text-xl font-semibold tabular-nums text-slate-900">
+        <p className="mt-3 text-xl font-semibold tabular-nums text-stone-900">
           {formatPrice(product.price)}
         </p>
 
-        <p className="mt-5 text-sm leading-relaxed text-slate-600">
+        <p className="mt-5 text-sm leading-relaxed text-stone-600">
           {product.description || "A Yamone Cosmetics studio essential."}
         </p>
 
         <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-stretch">
           {!inCart && (
-            <div className="flex items-center justify-between rounded-xl border border-slate-200 sm:w-auto">
+            <div className="flex items-center justify-between rounded-xl border border-stone-200 sm:w-auto">
               <button
                 type="button"
                 onClick={() => setQuantity((value) => Math.max(1, value - 1))}
                 disabled={quantity <= 1}
-                className="flex h-11 w-11 items-center justify-center rounded-l-xl text-slate-700 transition-colors hover:bg-slate-50 disabled:opacity-30"
+                className="flex h-11 w-11 items-center justify-center rounded-l-xl text-stone-700 transition-colors hover:bg-stone-50 disabled:opacity-30"
                 aria-label="Decrease quantity"
               >
                 <Minus className="h-4 w-4" />
               </button>
-              <span className="min-w-8 text-center text-sm font-semibold tabular-nums text-slate-900">
+              <span className="min-w-8 text-center text-sm font-semibold tabular-nums text-stone-900">
                 {quantity}
               </span>
               <button
                 type="button"
                 onClick={() => setQuantity((value) => Math.min(99, value + 1))}
-                className="flex h-11 w-11 items-center justify-center rounded-r-xl text-slate-700 transition-colors hover:bg-slate-50"
+                className="flex h-11 w-11 items-center justify-center rounded-r-xl text-stone-700 transition-colors hover:bg-stone-50"
                 aria-label="Increase quantity"
               >
                 <Plus className="h-4 w-4" />
@@ -148,7 +148,7 @@ function ProductDetail({ product, onClose }: { product: Product; onClose: () => 
                   onClick: () => add(product),
                 });
               }}
-              className="flex min-h-12 flex-1 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50"
+              className="flex min-h-12 flex-1 items-center justify-center gap-2 rounded-lg border border-stone-200 bg-white text-sm font-semibold text-stone-700 transition-colors hover:bg-stone-50"
               aria-label={`Remove ${product.name} from cart`}
             >
               <X className="h-4 w-4" aria-hidden="true" />
@@ -173,7 +173,7 @@ function ProductDetail({ product, onClose }: { product: Product; onClose: () => 
           )}
         </div>
 
-        <ul className="mt-auto flex flex-wrap gap-x-4 gap-y-1.5 border-t border-slate-100 pt-6 text-xs text-slate-500">
+        <ul className="mt-auto flex flex-wrap gap-x-4 gap-y-1.5 border-t border-stone-100 pt-6 text-xs text-stone-500">
           <li>Free delivery on orders over $50</li>
           <li>Ships within 1–2 business days</li>
           <li>30-day satisfaction promise</li>

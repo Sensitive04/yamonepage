@@ -114,53 +114,53 @@ export function CheckoutModal({ open, onClose }: CheckoutModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-[80] flex items-end justify-center bg-slate-900/50 backdrop-blur-[2px] sm:items-center sm:p-6 animate-fade-in"
+      className="fixed inset-0 z-[80] flex items-end justify-center bg-stone-900/50 backdrop-blur-[2px] sm:items-center sm:p-6 animate-fade-in"
       role="dialog"
       aria-modal="true"
       aria-label="Checkout"
       onClick={() => !submitting && onClose()}
     >
       <div
-        className="relative max-h-[94vh] w-full max-w-lg overflow-y-auto rounded-t-3xl border border-slate-200 bg-white shadow-2xl animate-scale-in sm:rounded-3xl"
+        className="relative max-h-[94vh] w-full max-w-lg overflow-y-auto rounded-t-3xl border border-stone-200 bg-white shadow-2xl animate-scale-in sm:rounded-3xl"
         onClick={(event) => event.stopPropagation()}
       >
         <button
           type="button"
           onClick={() => !submitting && onClose()}
-          className="absolute right-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white/90 text-slate-700 shadow-sm backdrop-blur transition-colors hover:bg-white"
+          className="absolute right-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-stone-200 bg-white/90 text-stone-700 shadow-sm backdrop-blur transition-colors hover:bg-white"
           aria-label="Close checkout"
           disabled={submitting}
         >
           <X className="h-5 w-5" />
         </button>
 
-        <div className="border-b border-slate-100 px-6 py-6 sm:px-8">
+        <div className="border-b border-stone-100 px-6 py-6 sm:px-8">
           <p className="text-xs font-semibold uppercase tracking-wider text-brand-600">
             Checkout
           </p>
-          <h2 className="mt-2 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">
+          <h2 className="mt-2 text-xl font-semibold tracking-tight text-stone-900 sm:text-2xl">
             Delivery details
           </h2>
         </div>
 
-        <div className="border-b border-slate-100 bg-slate-50 px-6 py-4 text-sm sm:px-8">
+        <div className="border-b border-stone-100 bg-stone-50 px-6 py-4 text-sm sm:px-8">
           {items.map((item) => (
-            <div key={item.productId} className="flex justify-between gap-4 py-1 text-slate-700">
+            <div key={item.productId} className="flex justify-between gap-4 py-1 text-stone-700">
               <span className="line-clamp-1">
-                {item.name} <span className="text-slate-500">× {item.quantity}</span>
+                {item.name} <span className="text-stone-500">× {item.quantity}</span>
               </span>
-              <span className="shrink-0 font-semibold tabular-nums text-slate-900">
+              <span className="shrink-0 font-semibold tabular-nums text-stone-900">
                 {formatPrice(item.price * item.quantity)}
               </span>
             </div>
           ))}
-          <div className="mt-1 flex justify-between border-t border-slate-200 pt-2 text-slate-700">
+          <div className="mt-1 flex justify-between border-t border-stone-200 pt-2 text-stone-700">
             <span>Delivery</span>
-            <span className="font-semibold tabular-nums text-slate-900">
+            <span className="font-semibold tabular-nums text-stone-900">
               {shipping === 0 ? "Free" : formatPrice(shipping)}
             </span>
           </div>
-          <div className="mt-1 flex justify-between border-t border-slate-200 pt-2 text-base font-semibold text-slate-900">
+          <div className="mt-1 flex justify-between border-t border-stone-200 pt-2 text-base font-semibold text-stone-900">
             <span>Total</span>
             <span className="tabular-nums">{formatPrice(total)}</span>
           </div>
@@ -168,7 +168,7 @@ export function CheckoutModal({ open, onClose }: CheckoutModalProps) {
 
         <form onSubmit={handleSubmit} className="space-y-4 px-6 py-6 sm:px-8" noValidate>
           <div>
-            <label htmlFor="checkout-name" className="mb-1.5 block text-xs font-medium text-slate-700">
+            <label htmlFor="checkout-name" className="mb-1.5 block text-xs font-medium text-stone-700">
               Full name
             </label>
             <input
@@ -185,7 +185,7 @@ export function CheckoutModal({ open, onClose }: CheckoutModalProps) {
           </div>
 
           <div>
-            <label htmlFor="checkout-phone" className="mb-1.5 block text-xs font-medium text-slate-700">
+            <label htmlFor="checkout-phone" className="mb-1.5 block text-xs font-medium text-stone-700">
               Phone number
             </label>
             <input
@@ -202,7 +202,7 @@ export function CheckoutModal({ open, onClose }: CheckoutModalProps) {
           </div>
 
           <div>
-            <label htmlFor="checkout-address" className="mb-1.5 block text-xs font-medium text-slate-700">
+            <label htmlFor="checkout-address" className="mb-1.5 block text-xs font-medium text-stone-700">
               Delivery address
             </label>
             <textarea
@@ -230,7 +230,7 @@ export function CheckoutModal({ open, onClose }: CheckoutModalProps) {
             )}
           </button>
 
-          <p className="text-center text-xs leading-relaxed text-slate-500">
+          <p className="text-center text-xs leading-relaxed text-stone-500">
             Your branded PDF invoice downloads instantly, then we open Telegram with your order
             summary pre-filled.
           </p>

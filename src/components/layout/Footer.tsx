@@ -57,23 +57,34 @@ export function Footer() {
     : "https://t.me/yamonecosmetics";
 
   return (
-    <footer id="contact" className="scroll-mt-24 border-t border-slate-100 bg-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-10 py-12 md:grid-cols-2 lg:py-16">
-          <div>
+    <footer id="contact" className="relative scroll-mt-24 overflow-hidden bg-stone-950 text-stone-400">
+      {/* Champagne hairline + soft rose glow along the top edge. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-500/40 to-transparent"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[42rem] max-w-full -translate-x-1/2 rounded-full bg-brand-500/10 blur-3xl"
+      />
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-12 py-14 sm:grid-cols-2 lg:gap-16 lg:py-20">
+          {/* Brand. */}
+          <div className="lg:pr-10">
             <Link href="/" className="inline-flex items-center gap-1.5" aria-label="Yamone Cosmetics — home">
-              <span className="text-xl font-semibold leading-none tracking-tight text-slate-900">
+              <span className="font-display text-3xl font-semibold leading-none tracking-tight text-cream">
                 Yamone
               </span>
-              <span className="h-1.5 w-1.5 rounded-full bg-brand-600" aria-hidden="true" />
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-500" aria-hidden="true" />
             </Link>
 
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-600">
-              Premium beauty essentials formulated with skin-loving actives. Crafted in small
-              batches, delivered to your door.
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-stone-400">
+              Elevated beauty essentials, crafted in small batches — pure actives, couture
+              textures, and a glow that speaks softly.
             </p>
 
-            <div className="mt-6 flex flex-wrap gap-2">
+            <div className="mt-7 flex flex-wrap gap-2.5">
               {SOCIALS.map((social) => (
                 <a
                   key={social.label}
@@ -81,7 +92,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="flex h-11 items-center gap-2 rounded-lg border border-slate-200 px-3.5 text-sm font-medium text-slate-600 transition-colors hover:border-brand-600 hover:bg-brand-50 hover:text-brand-700"
+                  className="flex h-11 items-center gap-2 rounded-full border border-white/10 px-4 text-sm font-medium text-stone-300 transition-colors hover:border-brand-400/50 hover:text-brand-300"
                 >
                   {social.icon}
                   <span className="hidden sm:inline">{social.label}</span>
@@ -90,27 +101,30 @@ export function Footer() {
             </div>
           </div>
 
-          <div>
-            <h3 className="text-sm font-semibold text-slate-900">Contact</h3>
-            <ul className="mt-4 space-y-3 text-sm text-slate-600">
+          {/* Contact. */}
+          <div className="sm:justify-self-end">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-stone-500">
+              Contact
+            </p>
+            <ul className="mt-5 space-y-4 text-sm text-stone-400">
               <li className="flex items-start gap-3">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-400" aria-hidden="true" />
                 12 Rosewood Avenue, Lagos
               </li>
               <li className="flex items-center gap-3">
-                <Phone className="h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
+                <Phone className="h-4 w-4 shrink-0 text-brand-400" aria-hidden="true" />
                 <a
                   href="tel:+15550102030"
-                  className="min-h-11 py-2 transition-colors hover:text-brand-600"
+                  className="min-h-11 py-2 transition-colors hover:text-cream"
                 >
                   +1 555 010 2030
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <Mail className="h-4 w-4 shrink-0 text-brand-600" aria-hidden="true" />
+                <Mail className="h-4 w-4 shrink-0 text-brand-400" aria-hidden="true" />
                 <a
                   href="mailto:hello@yamonecosmetics.com"
-                  className="transition-colors hover:text-brand-600"
+                  className="transition-colors hover:text-cream"
                 >
                   hello@yamonecosmetics.com
                 </a>
@@ -119,9 +133,12 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-slate-100 py-6">
-          <p className="text-xs text-slate-500">
+        <div className="flex flex-col gap-3 border-t border-white/10 py-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs text-stone-500">
             © {new Date().getFullYear()} Yamone Cosmetics. All rights reserved.
+          </p>
+          <p className="text-[11px] uppercase tracking-[0.2em] text-stone-500">
+            Small-batch beauty · Crafted with care
           </p>
         </div>
       </div>

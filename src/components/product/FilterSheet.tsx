@@ -39,19 +39,19 @@ export function FilterSheet({
       aria-label="Product filters"
     >
       <div
-        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm animate-fade-in"
+        className="absolute inset-0 bg-stone-900/40 backdrop-blur-sm animate-fade-in"
         onClick={onClose}
         aria-hidden="true"
       />
       <div className="absolute inset-x-0 bottom-0 max-h-[85vh] overflow-y-auto rounded-t-3xl bg-white p-5 pb-8 shadow-2xl animate-slide-up">
-        <div className="mx-auto mb-4 h-1.5 w-10 rounded-full bg-slate-200" aria-hidden="true" />
+        <div className="mx-auto mb-4 h-1.5 w-10 rounded-full bg-stone-200" aria-hidden="true" />
 
         <div className="mb-5 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-slate-900">Filters</h2>
+          <h2 className="text-lg font-semibold text-stone-900">Filters</h2>
           <button
             type="button"
             onClick={onClose}
-            className="flex h-11 w-11 items-center justify-center rounded-lg text-slate-700 transition-colors hover:bg-slate-100"
+            className="flex h-11 w-11 items-center justify-center rounded-lg text-stone-700 transition-colors hover:bg-stone-100"
             aria-label="Close filters"
           >
             <X className="h-5 w-5" />

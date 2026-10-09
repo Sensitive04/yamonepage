@@ -306,7 +306,7 @@ export default function AdminDashboardPage() {
   return (
     <div className="min-h-screen bg-slate-100">
       <header className="sticky top-0 z-40 border-b border-slate-100 bg-white/90 backdrop-blur-lg">
-        <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center gap-4 px-4 sm:px-6 lg:px-8">
           <Link href="/" className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-brand-600 to-slate-500 text-white">
               <Sparkles className="h-4.5 w-4.5" aria-hidden="true" />
@@ -347,7 +347,7 @@ export default function AdminDashboardPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <main className="px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <h1 className="font-display text-3xl font-semibold text-slate-900">Products</h1>

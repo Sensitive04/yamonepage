@@ -36,17 +36,17 @@ const variantStyles: Record<
   { className: string; iconClassName: string; Icon: typeof Info }
 > = {
   success: {
-    className: "border-slate-200 bg-white text-slate-900",
+    className: "border-stone-200 bg-white text-stone-900",
     iconClassName: "text-emerald-500",
     Icon: CheckCircle2,
   },
   error: {
-    className: "border-slate-200 bg-white text-slate-900",
+    className: "border-stone-200 bg-white text-stone-900",
     iconClassName: "text-rose-500",
     Icon: XCircle,
   },
   info: {
-    className: "border-slate-200 bg-white text-slate-900",
+    className: "border-stone-200 bg-white text-stone-900",
     iconClassName: "text-brand-500",
     Icon: Info,
   },
@@ -88,7 +88,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               className={`pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-xl border px-4 py-3 shadow-md backdrop-blur animate-scale-in ${className}`}
             >
               <Icon className={`mt-0.5 h-5 w-5 shrink-0 ${iconClassName}`} aria-hidden="true" />
-              <p className="flex-1 text-sm font-medium text-slate-900">{item.message}</p>
+              <p className="flex-1 text-sm font-medium text-stone-900">{item.message}</p>
               {action && (
                 <button
                   type="button"
@@ -104,7 +104,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               <button
                 type="button"
                 onClick={() => dismiss(item.id)}
-                className="-m-1 rounded-full p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700"
+                className="-m-1 rounded-full p-2 text-stone-400 transition-colors hover:bg-stone-100 hover:text-stone-700"
                 aria-label="Dismiss notification"
               >
                 <X className="h-4 w-4" />

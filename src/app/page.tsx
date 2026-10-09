@@ -14,7 +14,7 @@ export default function HomePage() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col bg-cream">
       <Header onSearch={setQuery} onCategorySelect={setCategory} />
 
       <main className="flex-1">

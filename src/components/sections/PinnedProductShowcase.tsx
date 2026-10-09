@@ -85,7 +85,7 @@ export function PinnedProductShowcase({ products, className }: PinnedProductShow
   if (shouldReduceMotion) {
     return (
       <section className={cn("py-12 sm:py-16 lg:py-24", className)}>
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
             Featured Collection
           </h2>
@@ -123,7 +123,7 @@ export function PinnedProductShowcase({ products, className }: PinnedProductShow
       className={cn("relative h-[300vh] py-12 sm:py-16 lg:py-24", className)}
     >
       <div className="sticky top-0 h-screen overflow-hidden">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
             Featured Collection
           </h2>

@@ -25,36 +25,39 @@ export function ProductCard({
 
   return (
     <article
-      className="group flex flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition-all duration-300 hover:shadow-md animate-fade-up"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-stone-200/70 bg-white shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-stone-300 hover:shadow-[0_28px_60px_-34px_rgba(68,46,36,0.5)] animate-fade-up"
       style={{ animationDelay: `${Math.min(index, 8) * 50}ms` }}
     >
       <button
         type="button"
         onClick={() => onQuickView?.(product)}
-        className="relative block aspect-square w-full overflow-hidden bg-slate-100 text-left sm:aspect-[4/5]"
+        className="relative block aspect-square w-full overflow-hidden bg-stone-100 text-left sm:aspect-[4/5]"
         aria-label={`View ${product.name}`}
       >
         <SmartImage
           src={product.image}
           alt={product.name}
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
 
+        {/* Soft vignette for legibility of the hover chip. */}
+        <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-stone-900/25 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+
         {!product.inStock && (
-          <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-slate-700 shadow-sm backdrop-blur">
+          <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-stone-600 shadow-sm backdrop-blur">
             Sold out
           </span>
         )}
 
-        <span className="absolute inset-x-3 bottom-3 flex translate-y-2 items-center justify-center gap-1.5 rounded-lg bg-white/85 px-3 py-2.5 text-xs font-semibold text-slate-900 opacity-0 shadow-sm backdrop-blur-md transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-          <Eye className="h-4 w-4" aria-hidden="true" />
+        <span className="absolute inset-x-3 bottom-3 flex translate-y-2 items-center justify-center gap-1.5 rounded-full bg-white/85 px-3 py-2.5 text-[11px] font-medium uppercase tracking-[0.15em] text-stone-800 opacity-0 shadow-sm backdrop-blur-md transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+          <Eye className="h-3.5 w-3.5" aria-hidden="true" />
           Quick view
         </span>
       </button>
 
-      <div className="flex flex-1 flex-col p-2.5 sm:p-4">
-        <p className="hidden text-xs font-medium uppercase tracking-wide text-slate-500 sm:block">
+      <div className="flex flex-1 flex-col p-3 sm:p-4">
+        <p className="hidden text-[10px] font-medium uppercase tracking-[0.22em] text-brand-600 sm:block">
           {product.category}
         </p>
 
@@ -63,20 +66,20 @@ export function ProductCard({
             type="button"
             onClick={() => onQuickView?.(product)}
             title={product.name}
-            className="line-clamp-2 text-left text-[12.5px] font-medium leading-snug text-slate-900 transition-colors hover:text-brand-600 sm:text-[15px]"
+            className="line-clamp-2 text-left font-display text-[15px] font-medium leading-snug text-stone-900 transition-colors hover:text-brand-600"
           >
             {product.name}
           </button>
         </h3>
 
-        <div className="mt-auto flex items-center justify-between pt-2 sm:pt-3">
-          <span className="text-sm font-semibold tabular-nums text-slate-900 sm:text-base">
+        <div className="mt-auto flex items-baseline justify-between pt-2.5 sm:pt-3">
+          <span className="font-display text-base font-semibold tabular-nums text-stone-900">
             {formatPrice(product.price)}
           </span>
-          <span className="hidden items-center gap-1.5 text-xs text-slate-500 sm:flex">
+          <span className="hidden items-center gap-1.5 text-[11px] uppercase tracking-[0.12em] text-stone-500 sm:flex">
             <span
               className={`h-1.5 w-1.5 rounded-full ${
-                product.inStock ? "bg-emerald-500" : "bg-slate-300"
+                product.inStock ? "bg-emerald-500" : "bg-stone-300"
               }`}
               aria-hidden="true"
             />
@@ -99,12 +102,12 @@ export function ProductCard({
               toast("Added to cart", "success", { label: "View cart", onClick: openCart });
             }
           }}
-          className={`mt-2 flex min-h-10 w-full items-center justify-center gap-1.5 rounded-lg px-1 text-[12px] font-semibold shadow-sm transition-all duration-200 active:scale-[0.98] sm:mt-3 sm:min-h-11 sm:gap-2 sm:px-3 sm:text-sm ${
+          className={`mt-3 flex min-h-10 w-full items-center justify-center gap-1.5 rounded-full px-2 text-[12px] font-semibold transition-all duration-300 active:scale-[0.98] sm:min-h-11 sm:gap-2 sm:px-3 sm:text-sm ${
             !product.inStock
-              ? "cursor-not-allowed bg-slate-100 text-slate-400 shadow-none"
+              ? "cursor-not-allowed bg-stone-100 text-stone-400"
               : inCart
                 ? "border border-brand-200 bg-brand-50 text-brand-700 hover:bg-brand-100"
-                : "bg-brand-600 text-white hover:bg-brand-700"
+                : "bg-stone-900 text-cream shadow-sm hover:bg-stone-800"
           }`}
           aria-label={
             !product.inStock
@@ -119,7 +122,7 @@ export function ProductCard({
           ) : inCart ? (
             <>
               <X className="h-4 w-4" aria-hidden="true" />
-              <span className="hidden sm:inline">Remove from cart</span>
+              <span className="hidden sm:inline">Remove</span>
             </>
           ) : (
             <>

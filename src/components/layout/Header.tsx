@@ -71,17 +71,17 @@ export function Header({
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur-md transition-shadow ${
+      className={`sticky top-0 z-50 border-b border-stone-200/60 bg-cream/80 backdrop-blur-md transition-shadow ${
         scrolled ? "shadow-sm" : ""
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:px-6 lg:h-18 lg:gap-5 lg:px-8">
+      <div className="flex h-16 items-center gap-3 px-4 sm:px-6 lg:h-18 lg:gap-5 lg:px-8">
         <Link
           href="/"
           className="group flex shrink-0 items-center gap-1.5"
           aria-label="Yamone Cosmetics — home"
         >
-          <span className="text-xl font-semibold leading-none tracking-tight text-slate-900 transition-colors group-hover:text-brand-600 lg:text-2xl">
+          <span className="font-display text-2xl font-semibold leading-none tracking-tight text-stone-900 transition-colors group-hover:text-brand-600 lg:text-[1.7rem]">
             Yamone
           </span>
           <span className="h-1.5 w-1.5 rounded-full bg-brand-600" aria-hidden="true" />
@@ -92,7 +92,7 @@ export function Header({
             <button
               type="button"
               onClick={() => setShopOpen((open) => !open)}
-              className="flex items-center gap-1 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900"
+              className="flex items-center gap-1 rounded-lg px-3 py-2.5 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-100 hover:text-stone-900"
               aria-expanded={shopOpen}
               aria-haspopup="true"
             >
@@ -104,16 +104,16 @@ export function Header({
             </button>
 
             {shopOpen && (
-              <div className="absolute left-0 top-full mt-1.5 w-56 rounded-xl border border-slate-200 bg-white p-2 shadow-lg animate-scale-in">
+              <div className="absolute left-0 top-full mt-1.5 w-56 rounded-xl border border-stone-200 bg-white p-2 shadow-lg animate-scale-in">
                 {categoryItems.map((category) => (
                   <button
                     key={category}
                     type="button"
                     onClick={() => goCatalog(category)}
-                    className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-slate-900"
+                    className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-50 hover:text-stone-900"
                   >
                     {category === "All" ? "All products" : category}
-                    <ChevronRight className="h-4 w-4 text-slate-400" aria-hidden="true" />
+                    <ChevronRight className="h-4 w-4 text-stone-400" aria-hidden="true" />
                   </button>
                 ))}
               </div>
@@ -123,14 +123,14 @@ export function Header({
           <button
             type="button"
             onClick={goToCatalog}
-            className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900"
+            className="rounded-lg px-3 py-2.5 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-100 hover:text-stone-900"
           >
             Catalog
           </button>
           <button
             type="button"
             onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-            className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900"
+            className="rounded-lg px-3 py-2.5 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-100 hover:text-stone-900"
           >
             Contact
           </button>
@@ -140,7 +140,7 @@ export function Header({
           <label className="relative hidden md:block">
             <span className="sr-only">Search products</span>
             <Search
-              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400"
               aria-hidden="true"
             />
             <input
@@ -151,13 +151,13 @@ export function Header({
                 if (event.key === "Enter") submitSearch();
               }}
               placeholder="Search products"
-              className="h-11 w-44 rounded-lg border border-slate-200 bg-white pl-9 pr-3 text-sm text-slate-900 transition-all placeholder:text-slate-400 focus:w-56 focus:border-brand-500 focus:ring-4 focus:ring-brand-500/15 focus:outline-none"
+              className="h-11 w-44 rounded-lg border border-stone-200 bg-white pl-9 pr-3 text-sm text-stone-900 transition-all placeholder:text-stone-400 focus:w-56 focus:border-brand-500 focus:ring-4 focus:ring-brand-500/15 focus:outline-none"
             />
           </label>
 
           <button
             type="button"
-            className="flex h-11 w-11 items-center justify-center rounded-lg text-slate-700 transition-colors hover:bg-slate-100 md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-lg text-stone-700 transition-colors hover:bg-stone-100 md:hidden"
             onClick={() => setSearchOpen((open) => !open)}
             aria-label={searchOpen ? "Close search" : "Open search"}
             aria-expanded={searchOpen}
@@ -168,7 +168,7 @@ export function Header({
           <button
             type="button"
             onClick={toggle}
-            className="relative flex h-11 w-11 items-center justify-center rounded-lg text-slate-700 transition-colors hover:bg-slate-100"
+            className="relative flex h-11 w-11 items-center justify-center rounded-lg text-stone-700 transition-colors hover:bg-stone-100"
             aria-label={`Open cart, ${count} item${count === 1 ? "" : "s"}`}
           >
             <ShoppingBag className="h-5 w-5" />
@@ -182,11 +182,11 @@ export function Header({
       </div>
 
       {searchOpen && (
-        <div className="border-t border-slate-100 px-4 pb-3 pt-3 md:hidden animate-fade-in">
+        <div className="border-t border-stone-100 px-4 pb-3 pt-3 md:hidden animate-fade-in">
           <label className="relative block">
             <span className="sr-only">Search products</span>
             <Search
-              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400"
               aria-hidden="true"
             />
             <input
